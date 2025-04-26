@@ -3,7 +3,8 @@ import random
 from telebot.types import Message
 
 
-bot = telebot.TeleBot("")
+
+bot = telebot.TeleBot("7606191233:AAHijb2uiEMQfBTTfGTFPc_z2Fg28n6HcWg")
 
 
 @bot.message_handler(commands=["start"])
@@ -22,8 +23,8 @@ def coin_cmd(message: Message):
 
 @bot.message_handler(commands=["about"])
 def about_cmd(message: Message):
-    text = '<b>Мои команды:</b>\n/ start - <i>запускает бота</i> \n/about - <i> О боте </i> \n /coin - <i>Орел и решка</i>\n /knb - камень/ножницы/бумага '
-    bot.send_message(message.chat.id, text)
+    text = '<u><b>Мои команды:</b></u>\n/start - <i> запускает бота </i> \n/about - <i> О боте </i> \n/coin - <i>Орел и решка</i>\n/knb - <i>камень/ножницы/бумага</i>\n/timer - <i>таймер</i>\n'
+    bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
 @bot.message_handler(commands=["knb"])
@@ -50,7 +51,6 @@ def knb_game(message: Message):
         bot.send_message(message.chat.id, "Вы проиграли, если хотите поиграть снова, напишите /knb")
         return
     
-
 
 
 
