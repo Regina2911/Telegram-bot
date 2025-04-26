@@ -1,7 +1,9 @@
 import telebot
 import random
 from telebot.types import Message
-
+import time, threading
+import schedule
+from telebot import TeleBot
 
 
 bot = telebot.TeleBot("7606191233:AAHijb2uiEMQfBTTfGTFPc_z2Fg28n6HcWg")
@@ -52,7 +54,37 @@ def knb_game(message: Message):
         return
     
 
+@bot.message_handler(commands=['timer'])
+def send_welcome(message):
+    bot.reply_to(message, "Используй /set <секунды>  чтобы установить таймер")
 
+
+def beep(chat_id) -> None:
+    """Send the beep message."""
+    bot.send_message(chat_id, text='Бииип!')
+
+
+@bot.message_handler(commands=['set'])
+def set_timer(message):
+    args = message.text.split()
+    if len(args) > 1 and args[1].isdigit():
+        sec = int(args[1])
+        bot.reply_to(message, f'Таймер установлен на {sec} секунд.')
+        threading.Timer(sec, beep, args=[message.chat.id]).start()
+    else:
+        bot.reply_to(message, 'Используй так: /set <секунды>')
+
+
+@bot.message_handler(commands=['unset'])
+def unset_timer(message):
+    schedule.clear(message.chat.id)
+
+
+if __name__ == '__main__':
+    threading.Thread(target=bot.infinity_polling, name='bot_infinity_polling', daemon=True).start()
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 bot.infinity_polling()
