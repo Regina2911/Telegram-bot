@@ -6,7 +6,7 @@ import schedule
 from telebot import TeleBot
 
 
-bot = telebot.TeleBot("7606191233:AAHijb2uiEMQfBTTfGTFPc_z2Fg28n6HcWg")
+bot = telebot.TeleBot("")
 
 
 @bot.message_handler(commands=["start"])
